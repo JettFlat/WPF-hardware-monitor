@@ -1,0 +1,84 @@
+﻿<Window x:Class="HardwareMonitor.MainWindow"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HardwareMonitor"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        mc:Ignorable="d"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal" 
+        TextOptions.TextRenderingMode="Auto"   
+        Style="{StaticResource VS2012WindowStyle}"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}" SizeToContent="WidthAndHeight" MinHeight="160" MinWidth="160">
+    <Window.DataContext>
+        <local:VM/>
+    </Window.DataContext>
+    <Window.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="Background" Value="Black"/>
+        </Style>
+        <Style TargetType="StackPanel">
+            <Setter Property="Background" Value="Black"/>
+        </Style>
+    </Window.Resources>
+    <!--<i:Interaction.Triggers>
+        <i:EventTrigger EventName="Closing">
+            <i:InvokeCommandAction  Command="{Binding WindowClosing}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>-->
+    <Grid>
+        <StackPanel>
+            <ListBox ItemsSource="{Binding SysData.Hards}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <TextBlock Text="{Binding Path=Hardware.Name}"/>
+                            <ListBox ItemsSource="{Binding GraphicValues}">
+                                <ListBox.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <WrapPanel/>
+                                    </ItemsPanelTemplate>
+                                </ListBox.ItemsPanel>
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <DockPanel>
+                                                <TextBlock DockPanel.Dock="Left" Text="{Binding Path=HardName}"/>
+                                                <Button DockPanel.Dock="Right" HorizontalAlignment="Right" Command="{Binding RelativeSource={RelativeSource AncestorType=Window,Mode=FindAncestor},Path=DataContext.Delete}" CommandParameter="{Binding}" Style="{StaticResource MaterialDesignFlatButton}">
+                                                    <materialDesign:PackIcon Kind="DeleteCircle" Foreground="White"/>
+                                                </Button>
+                                            </DockPanel>
+                                            <StackPanel MinWidth="150" Orientation="Horizontal">
+                                                <TextBlock  FontSize="30" FontFamily="Impact" Foreground="White" Text="{Binding Path=CurrentValue}"/>
+                                                <TextBlock  Text=" "/>
+                                                <TextBlock  Text="{Binding UnitType}" VerticalAlignment="Bottom"/>
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal">
+                                                <Polyline MinHeight="60" MinWidth="110" Stroke="OrangeRed" StrokeEndLineCap="Round" StrokeThickness="2" Points="{Binding Path=Points}"/>
+                                                <StackPanel>
+                                                    <TextBlock Text="{Binding Path=Max}" VerticalAlignment="Top"/>
+                                                    <TextBlock Text="{Binding Path=Min}" VerticalAlignment="Bottom"/>
+                                                </StackPanel>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <Button Command="{Binding ToDefault}" Foreground="White" Style="{StaticResource MaterialDesignFlatButton}">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Reset"/>
+                    <materialDesign:PackIcon Kind="Settings" Foreground="White"/>
+                </StackPanel>
+            </Button>
+        </StackPanel>
+    </Grid>
+</Window>
