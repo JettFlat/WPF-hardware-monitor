@@ -1,3 +1,3 @@
 # WPF-hardware-monitor
 GUI for Open Hardware Monitor (https://github.com/openhardwaremonitor/openhardwaremonitor)
-![](SimpleZip/Screen.png)
+![](WPF-hardware-monitor/Screen.png)
